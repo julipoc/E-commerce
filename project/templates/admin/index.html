@@ -1,0 +1,72 @@
+{% extends "admin/master.html" %}
+
+{% block head_css %}
+{{ super() }}
+<link href="{{url_for('static', filename='style_admin.css')}}" rel="stylesheet">
+{% endblock %}
+
+
+{% block body %}
+
+<div class="row">
+  <div class="col-xs-4">
+    <div class="thumbnail">
+       <img src="{{url_for('static', filename='background/admin/admin.jpg')}}">
+      <div class="caption" id="admin-info">
+        <p><span>ID:</span> {{current_user.id}}</p>
+        <p><span>NAME:</span> {{current_user.first_name}} {{current_user.last_name}}</p>
+        <p><span>EMAIL:</span> {{current_user.email}}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-4">
+    <div class="thumbnail">
+      <img src="{{url_for('static', filename='background/admin/users.jpg')}}" id="users-img">
+      <div class="caption">
+        <h4>{{all_users}}</h4>
+        <p>ALL USERS</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-4">
+    <div class="thumbnail">
+      <img src="{{url_for('static', filename='background/admin/orders.jpg')}}">
+      <div class="caption">
+        <h4>{{all_orders}}</h4>
+        <p>ALL ORDERS</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<canvas id="lineChart" width="1100" height="350"></canvas>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+
+<script>
+var ctx = document.getElementById('lineChart').getContext('2d');
+
+var lineChart = new Chart(ctx, {
+    type: "doughnut",
+    data: {
+        labels: {{labels | safe}},
+        datasets: [
+           {
+            label: "Users",
+            data: {{values | safe}},
+            backgroundColor: [
+                'rgb(255,165,0)',
+                'rgb(100,149,237)',
+
+            ],
+            borderWidth: 2
+           }
+        ]
+    },
+    options: {
+        responsive: true,
+    }
+});
+</script>
+
+{% endblock %}

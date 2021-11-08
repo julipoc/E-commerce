@@ -1,0 +1,80 @@
+{% extends "index.html" %}
+{% block content %}
+
+<section id="section1">
+    <img class="card-img" src="{{url_for('static', filename='background/home.jpg')}}" id="home-img">
+    <div class="centered">
+        <h3>LOREM IPSUM DOLOR SIT AMET</h3>
+        <p>Accusantium architecto at, consectetur deleniti eaque est in!</p>
+    </div>
+</section>
+
+<section id="section2">
+    <h6>ALL PRODUCTS</h6>
+    <div class="row row-cols-2 row-cols-md-4 g-3" id="cards-home">
+      {% for product in product.items %}
+          <div class="col">
+            <div class="card h-100" id="card-home">
+              <a href="{{url_for('core.about_product', product_id=product.id)}}"><img class="card-img-top" src=/static/images/{{ product.image }} alt="Card image cap" ></a>
+              <div class="card-body">
+                <h5 class="card-title"><a href="{{url_for('core.about_product', product_id=product.id)}}">{{product.name.upper()}}</a></h5>
+                <p class="card-text">{{product.price}} €</p>
+              </div>
+            </div>
+          </div>
+      {% endfor %}
+    </div>
+
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+          {% for page_num in product.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+              {% if page_num %}
+                {% if product.page == page_num %}
+                    <li class="page-item disabled"><a class="page-link" href="{{url_for('core.home', page=page_num)}}" style="box-shadow: none;">{{page_num}}</a></li>
+                {% else %}
+                    <li class="page-item"><a class="page-link" href="{{url_for('core.home', page=page_num)}}" style="box-shadow: none;">{{page_num}}</a></li>
+                {% endif %}
+              {% else %}
+                <li class="page-link">...</li>
+              {% endif %}
+          {% endfor %}
+      </ul>
+    </nav>
+</section>
+
+<section id="section3">
+    <div class="row row-cols-1 row-cols-md-3 g-1">
+      <div class="col">
+        <div class="card h-100">
+          <img class="card-img" src="{{url_for('static', filename='background/1.jpg')}}">
+        </div>
+      </div>
+      <div class="col">
+        <div class="card h-100">
+          <img class="card-img" src="{{url_for('static', filename='background/2.jpeg')}}">
+        </div>
+      </div>
+      <div class="col">
+        <div class="card h-100">
+          <img class="card-img" src="{{url_for('static', filename='background/3.jpg')}}">
+        </div>
+      </div>
+      <div class="col">
+        <div class="card h-100">
+          <img class="card-img" src="{{url_for('static', filename='background/4.jpg')}}">
+        </div>
+      </div>
+      <div class="col">
+        <div class="card h-100">
+          <img class="card-img" src="{{url_for('static', filename='background/5.jpg')}}">
+        </div>
+      </div>
+      <div class="col">
+        <div class="card h-100">
+          <img class="card-img" src="{{url_for('static', filename='background/6.jpg')}}">
+        </div>
+      </div>
+    </div>
+</section>
+
+{% endblock %}

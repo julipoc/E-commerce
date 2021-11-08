@@ -1,0 +1,27 @@
+{% extends "index.html" %}
+{% block content %}
+
+<div id="registration-container">
+    <h5>REGISTER</h5>
+    <p>Please fill in the information below:</p>
+    <form method="POST">
+        {{form.hidden_tag()}}
+        {{form.first_name.label()}} {{form.first_name(placeholder=" First name", id="first-name")}}<br>
+        {{form.last_name.label()}} {{form.last_name(placeholder=" Last name", id="last-name")}}<br>
+        {{form.email.label()}} {{form.email(placeholder=" Email", id="email2")}}<br>
+            {% for error in form.email.errors %}
+                <span style="color: #e50000;">{{ error }}</span><br>
+            {% endfor %}
+        {{form.password.label()}} {{form.password(placeholder=" Password", id="password2")}}<br>
+            {% for error in form.password.errors %}
+                <span style="color: #e50000;">{{ error }}</span><br>
+            {% endfor %}
+        {{form.confirm_password.label()}} {{form.confirm_password(placeholder=" Confirm password", id="confirm-password")}}<br>
+            {% for error in form.confirm_password.errors %}
+                <span style="color: #e50000;">{{ error }}</span><br>
+            {% endfor %}
+        {{form.submit(id="register")}}
+    </form>
+</div>
+
+{% endblock %}

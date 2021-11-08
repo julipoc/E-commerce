@@ -1,0 +1,147 @@
+{% extends "index.html" %}
+{% block content %}
+
+<h3 id="checkout-title">SHIPPING INFORMATION</h3>
+
+<div class="row" id="checkout-row">
+	<div class="col-6" id="info-group">
+		<div class="panel panel-primary">
+			<form method="POST" action="{{url_for('carts.checkout')}}">
+				<div class="panel-body">
+					<div class="row" id="personal-info">
+						<div class="col-12">
+							<h4 class="bold">PERSONAL INFORMATION</h4>
+						</div>
+
+						<div class="col-12" >
+							<div class="form-group">
+								{{form.hidden_tag()}}
+								<label>Email</label><br>
+								{{form.email(id="checkout-email")}}<br>
+								{% for error in form.email.errors %}
+									<span style="color: #e50000;">{{ error }}</span><br>
+								{% endfor %}
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="form-group">
+								<label>First name</label><br>
+								{{form.first_name(id="checkout-first")}}<br>
+								{% for error in form.first_name.errors %}
+									<span style="color: #e50000;">{{ error }}</span><br>
+								{% endfor %}
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="form-group">
+								<label>Last name</label><br>
+								{{form.last_name(id="checkout-last")}}<br>
+								{% for error in form.last_name.errors %}
+									<span style="color: #e50000;">{{ error }}</span><br>
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+					<div class="row" id="address-info">
+						<div class="col-12">
+							<h4 class="bold">ADDRESS</h4>
+						</div>
+						<div class="col-6">
+							<div class="form-group">
+								<label>Address</label><br>
+								{{form.address(id="checkout-address")}}<br>
+								{% for error in form.address.errors %}
+									<span style="color: #e50000;">{{ error }}</span><br>
+								{% endfor %}
+							</div>
+							<div class="form-group">
+								<label>City</label><br>
+								{{form.city(id="checkout-city")}}<br>
+								{% for error in form.city.errors %}
+									<span style="color: #e50000;">{{ error }}</span><br>
+								{% endfor %}
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="form-group">
+								<label>Zip Code</label><br>
+								{{form.zip_code(id="checkout-zip")}}<br>
+								{% for error in form.zip_code.errors %}
+									<span style="color: #e50000;">{{ error }}</span><br>
+								{% endfor %}
+							</div>
+							<div class="form-group">
+								<label>Country</label><br>
+								{{form.country(id="checkout-country")}}<br>
+								{% for error in form.country.errors %}
+									<span style="color: #e50000;">{{ error }}</span><br>
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+					<div class="row" id="payment-info">
+						<div class="col-12">
+							<h4 class="bold">PAYMENT</h4>
+						</div>
+						<div class="col-12">
+							<div class="form-group">
+								<label>Card number</label><br>
+								{{form.card_number(id="checkout-card")}}<br>
+								{% for error in form.card_number.errors %}
+									<span style="color: #e50000;">{{ error }}</span><br>
+								{% endfor %}
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="form-group">
+								{{form.security_number.label}}<br>
+								{{form.security_number(id="checkout-cvv")}}<br>
+								{% for error in form.security_number.errors %}
+									<span style="color: #e50000;">{{ error }}</span><br>
+								{% endfor %}
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="form-group">
+								<label>Card date</label><br>
+								{{form.card_date(id="checkout-date")}}<br>
+								{% for error in form.card_date.errors %}
+									<span style="color: #e50000;">{{ error }}</span><br>
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel-footer" id="panel2">
+					<button type="submit" class="btn" id="order-btn">ORDER</button>&nbsp;&nbsp;
+					<a id="return" href="{{url_for('carts.cart')}}" class="btn">RETURN TO CART</a>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div class="col-6" id="cart-details">
+		<h4 class="bold">CART SUMMARY</h4>
+		<ul class="list-group" id="cart-details2">
+			<li class="list-group-item">
+				<p>{{total_quantity}} ITEMS: <strong class="pull-right">{{total_price}} €</strong></p>
+				{% if total_price >= 50 %}
+					<p>SHIPPING: <strong class="pull-right">0 €</strong></p>
+				{% else %}
+					<p>SHIPPING: <strong class="pull-right">10 €</strong></p>
+				{% endif %}
+			</li>
+			{% if total_price >= 50 %}
+				<li class="list-group-item" id="cart-total">
+					<p>TOTAL: <strong class="pull-right">{{total_price}} €</strong></p>
+				</li>
+			{% else %}
+				<li class="list-group-item" id="cart-total2">
+					<p>TOTAl: <strong class="pull-right">{{total_plus_shipping}} €</strong></p>
+				</li>
+			{% endif %}
+		</ul>
+	</div>
+</div>
+
+{% endblock %}

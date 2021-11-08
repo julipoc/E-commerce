@@ -1,0 +1,79 @@
+{% extends "index.html" %}
+{% block content %}
+
+{% for product in products %}
+    {% if loop.index <= 1 %}
+        <div>
+           <img class="card-img" src='static/background/{{product.category}}.jpg' id="bracelet-img" style="height: 100%;">
+            <div class="centered">
+                <h3 style="color:white;">{{product.category.upper()}}S</h3>
+            </div>
+        </div>
+    {% endif %}
+{% endfor %}
+
+<div id="mySidenav" class="right sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <h4>FILTERS</h4>
+  <form method="POST">
+      {{form.hidden_tag()}}
+      {% for subcategory in form.subcategory_filter %}
+        <tr>
+            <td>{{subcategory(id="radio")}}</td>
+            <td>{{subcategory.label}}</td><br>
+        </tr>
+      {% endfor %}
+      <div id="apply-container">
+          {{form.submit(id="apply")}}
+      </div>
+  </form>
+</div>
+
+<div id="filter-container">
+    <span onclick="openNav()" id="filter">FILTER</span>
+</div>
+
+{% if filter_product == [] and filter_result == None %}
+    <div class="row row-cols-2 row-cols-md-4 g-3" id="cards-products">
+      {% for product in products %}
+          <div class="col">
+            <div class="card h-100" id="card-product">
+              <a href="{{url_for('core.about_product', product_id=product.id)}}"><img class="card-img-top" src=/static/images/{{ product.image }} alt="Card image cap" ></a>
+              <div class="card-body">
+                <h5 class="card-title"><a href="{{url_for('core.about_product', product_id=product.id)}}">{{product.name.upper()}}</a></h5>
+                <p class="card-text">{{product.price}} €</p>
+              </div>
+            </div>
+          </div>
+      {% endfor %}
+    </div>
+
+{% elif filter_product == [] and (filter_result == "gold" or filter_result == "silver") %}
+    <h4 id="no-result">No result</h4>
+{% else %}
+    <div class="row row-cols-2 row-cols-md-4 g-3" id="cards-products2">
+      {% for product in filter_product %}
+          <div class="col">
+            <div class="card h-100" id="card-product2">
+              <a href="{{url_for('core.about_product', product_id=product.id)}}"><img class="card-img-top" src=/static/images/{{ product.image }} alt="Card image cap" ></a>
+              <div class="card-body">
+                <h5 class="card-title"><a href="{{url_for('core.about_product', product_id=product.id)}}">{{product.name.upper()}}</a></h5>
+                <p class="card-text">{{product.price}} €</p>
+              </div>
+            </div>
+          </div>
+      {% endfor %}
+    </div>
+{% endif %}
+
+<script>
+    function openNav() {
+      document.getElementById("mySidenav").style.width = "220px";
+    }
+
+    function closeNav() {
+      document.getElementById("mySidenav").style.width = "0";
+    }
+</script>
+
+{% endblock %}

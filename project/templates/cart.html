@@ -1,0 +1,61 @@
+{% extends "index.html" %}
+{% block content %}
+
+<h3 id="bag-title">SHOPPING BAG</h3>
+{% if total_quantity == 0 %}
+	<h6 id="empty-bag">YOUR BAG IS EMPTY!</h6>
+	<a id="empty-bag-a" href="{{ url_for('core.home') }}">CONTINUE SHOPPING</a>
+{% else %}
+	<table id="cart-table">
+		<tr>
+			<th></th>
+			<th>PRODUCT</th>
+			<th>PRICE</th>
+			<th>QUANTITY</th>
+			<th>TOTAL</th>
+			<th></th>
+		</tr>
+
+		{% for product in products %}
+			<tr id="table-info">
+				<td><img src=/static/images/{{product.image}} alt="image" style="width: 100px; height: 100px;"></td>
+				<td>{{product.name.capitalize()}}</td>
+				<td>{{product.price}} €</td>
+				<td>{{product.quantity}}</td>
+				<td>{{product.total}} €</td>
+				<td><a href="{{url_for('carts.remove_from_cart', index=product.index)}}"><button id="cart-remove" type="button"> REMOVE </button></a></td>
+			</tr>
+		{% endfor %}
+	</table>
+
+	<div id="cart-summary">
+		<h3 class="bold">CART SUMMARY</h3>
+		<ul class="list-group">
+			<li class="list-group-item">
+				<p>{{total_quantity}} ITEMS: <strong class="pull-right">{{total_price}} €</strong></p>
+
+				{% if total_price >= 50 %}
+					<p>SHIPPING: <strong class="pull-right">0 €</strong></p>
+				{% else %}
+					<p>SHIPPING: <strong class="pull-right">10 €</strong></p>
+				{% endif %}
+			</li>
+
+			{% if total_price >= 50 %}
+				<li class="list-group-item" id="cart-total">
+					<p>TOTAL: <strong class="pull-right">{{total_price}} €</strong></p>
+				</li>
+			{% else %}
+				<li class="list-group-item" id="cart-total2">
+					<p>TOTAl: <strong class="pull-right">{{total_plus_shipping}} €</strong></p>
+				</li>
+			{% endif %}
+		</ul>
+		<div class="panel-footer">
+			<a href="{{url_for('carts.checkout')}}" class="btn">CHECKOUT</a>&nbsp;&nbsp;
+			<a id="continue" href="{{url_for('core.home')}}" class="btn">CONTINUE SHOPPING</a>
+		</div>
+	</div>
+{% endif %}
+
+{% endblock %}

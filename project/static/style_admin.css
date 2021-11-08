@@ -1,0 +1,39 @@
+body {
+    background-color: #F0F0F0;
+}
+
+#lineChart {
+   margin-top: 50px;
+   margin-bottom: 50px;
+}
+
+
+#users-img {
+    border: 1px solid #F0F0F0;
+}
+
+.row {
+    margin-left: 200px;
+    margin-right: 200px;
+    text-align: center;
+    font-size: 12px;
+}
+
+@media (max-width:1000px) {
+    .row
+    {
+    margin: 0px;
+    }
+    #admin-info
+    {
+    font-size: 10px;
+    }
+}
+
+.caption {
+    height: 100px;
+}
+
+span {
+    color: grey;
+}

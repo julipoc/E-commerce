@@ -1,0 +1,24 @@
+{% extends "index.html" %}
+{% block content %}
+
+<div id="login-container">
+    <h5>LOG IN</h5>
+    <p>Please enter your e-mail and password:</p>
+    <form method="POST">
+        {{form.hidden_tag()}}
+        {{form.email.label()}} {{form.email(placeholder=" Email", id="email")}}<br>
+            {% for error in form.email.errors %}
+                <span style="color: #e50000;">{{ error }}</span><br>
+            {% endfor %}
+        {{form.password.label()}} {{form.password(placeholder=" Password", id="password")}}<br>
+            {% for error in form.password.errors %}
+                <span style="color: #e50000;">{{ error }}</span><br>
+            {% endfor %}
+        {{form.submit(id="login")}}
+        <p>Not a member!
+            <a class="nav-link d-md-inline" href="{{ url_for('users.registration') }}" id="logreg-link"> REGISTER</a>
+        </p>
+    </form>
+</div>
+
+{% endblock %}
